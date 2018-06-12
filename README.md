@@ -8,3 +8,7 @@ To run on your system:
 2. Change tensorboard directory
 3. Change save directory
 4. pip3 install (any needed requirements)
+
+Util folder:
+img_generator.py: Given a trained model directory, returns art from running generator op
+resize.py: utility file to resize a set of images and save numpy array for faster load times
