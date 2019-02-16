@@ -11,17 +11,21 @@ def generate_images(file):
     ckpt = file
     with tf.Session() as sess:
         z = np.random.uniform(-1, 1, [32,100])
-        graph = tf.train.import_meta_graph(meta)
-        graph.restore(sess, ckpt)
-        images = sess.run("generator/generate:0", feed_dict={"z:0": z})
+        with tf.device("/CPU:0"):
+            graph = tf.train.import_meta_graph(meta)
+            graph.restore(sess, ckpt)
+            images = sess.run("generator/generate:0", feed_dict={"z:0": z})
     return images + 1 /2
 
 def save_images(save_dir, net_file, num):
     for i in tqdm(range(num)):
         images = generate_images(net_file)
         for j, img in enumerate(images):
-            imsave(save_dir+"/painting_{}{}.jpeg".format(str(i), str(j)),img)
-
+            imsave(save_dir+"/painting_11{}{}.jpeg".format(str(i), str(j)), img)
+save = "/home/ian/GenImages/"
+ckpt = "/home/ian/Server/GAN_HD.ckpt"
+save_images(save, ckpt, 15)
+'''
 save = "/Users/IanRowan/Pictures/paintings"
 ckpt = "/Users/IanRowan/Dropbox/GANs_good/50k/GAN_HD.ckpt"
 save_images(save, ckpt,10)
@@ -57,4 +61,4 @@ def save_images_from_event(fn, tag, output_dir='./'):
 tag = "painted/image/1"
 outputd = "/Users/IanRowan/Pictures/paintings/find"
 dir = "/Users/IanRowan/events.out.tfevents.1527988957.ian-ThinkStation-S20"
-#save_images_from_event(dir,tag, outputd)0
+#save_images_from_event(dir,tag, outputd)0'''

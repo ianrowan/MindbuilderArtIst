@@ -27,11 +27,13 @@ def transform(image, is_crop=True, resize_w=64):
     return np.array(cropped_image)/127.5 - 1.
 
 
+
 im_h = 256
 im_w = 256
-path = "/home/ian/portrait"
-ids_ = next(os.walk(path))[2][:17000]
+path = "/home/ian/GAN_CARs"
+ids_ = next(os.walk(path))[2]
 print(len(ids_))
+print(ids_[0:10])
 
 train = np.zeros(shape=[len(ids_), im_h, im_w, 3], dtype=np.float32)
 for i, id_ in tqdm(enumerate(ids_),total=len(ids_)):
@@ -47,4 +49,4 @@ for i, id_ in tqdm(enumerate(ids_),total=len(ids_)):
         train[i] = train[i - 1]
         tqdm.write(str(i))
 
-np.save("/home/ian/imgs_256_por", train)
+np.save("/home/ian/imgs_256_cars", train)
